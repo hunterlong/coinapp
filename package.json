@@ -20,8 +20,9 @@
     "ethereumjs-wallet": "^0.6.1",
     "ethers": "^3.0.26",
     "ledgerco": "^1.2.1",
-    "rlp": "^2.1.0",
     "node-hid": "^0.7.3",
-    "web3": "^1.0.0-beta.35"
+    "rlp": "^2.1.0",
+    "web3": "^1.0.0-beta.35",
+    "websocket": "^1.0.26"
   }
 }
