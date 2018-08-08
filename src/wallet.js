@@ -121,6 +121,34 @@ function NewWallet(coin, key) {
                     resolve(new CoinWallet(w));
                 });
                 break;
+            case "bch":
+                UnlockBTCPrivateKey(coin, key).then(function (wdata) {
+                    w = {
+                        address: wdata.address,
+                        priv: wdata.toWIF(),
+                        network: networks.bitcoincash,
+                        coin: coin.toUpperCase(),
+                        w: wdata,
+                        api: Endpoints.bch,
+                        isBtc: true,
+                    };
+                    resolve(new CoinWallet(w));
+                });
+                break;
+            case "bchtest":
+                UnlockBTCPrivateKey(coin, key).then(function (wdata) {
+                    w = {
+                        address: wdata.address,
+                        priv: wdata.toWIF(),
+                        network: networks.bitcoincashtestnet,
+                        coin: coin.toUpperCase(),
+                        w: wdata,
+                        api: Endpoints.bchtest,
+                        isBtc: true,
+                    };
+                    resolve(new CoinWallet(w));
+                });
+                break;
             case "ltc":
                 UnlockBTCPrivateKey(coin, key).then(function (wdata) {
                     w = {
@@ -144,6 +172,48 @@ function NewWallet(coin, key) {
                         coin: coin.toUpperCase(),
                         w: wdata,
                         api: Endpoints.ltctest,
+                        isBtc: true,
+                    };
+                    resolve(new CoinWallet(w));
+                });
+                break;
+            case "zcash":
+                UnlockBTCPrivateKey(coin, key).then(function (wdata) {
+                    w = {
+                        address: wdata.address,
+                        priv: wdata.toWIF(),
+                        network: networks.zcash,
+                        coin: coin.toUpperCase(),
+                        w: wdata,
+                        api: Endpoints.ltc,
+                        isBtc: true,
+                    };
+                    resolve(new CoinWallet(w));
+                });
+                break;
+            case "doge":
+                UnlockBTCPrivateKey(coin, key).then(function (wdata) {
+                    w = {
+                        address: wdata.address,
+                        priv: wdata.toWIF(),
+                        network: networks.dogecoin,
+                        coin: coin.toUpperCase(),
+                        w: wdata,
+                        api: Endpoints.ltc,
+                        isBtc: true,
+                    };
+                    resolve(new CoinWallet(w));
+                });
+                break;
+            case "dash":
+                UnlockBTCPrivateKey(coin, key).then(function (wdata) {
+                    w = {
+                        address: wdata.address,
+                        priv: wdata.toWIF(),
+                        network: networks.dash,
+                        coin: coin.toUpperCase(),
+                        w: wdata,
+                        api: Endpoints.ltc,
                         isBtc: true,
                     };
                     resolve(new CoinWallet(w));
@@ -175,18 +245,24 @@ function UnlockWalletKeystore(filename, password) {
 function UnlockBTCPrivateKey(coin, key) {
     return new Promise(function (resolve, reject) {
         var network = networks.bitcoin;
-        if(coin == "btc") {
+        if(coin === "btc") {
             network = networks.bitcoin;
-        } else if(coin == "ltc") {
-            network = networks.litecoin;
-        } else if(coin == "btctest") {
+        } else if(coin === "btctest") {
             network = networks.testnet;
-        } else if(coin == "ltctest") {
+        } else if(coin === "bch") {
+            network = networks.bitcoincash;
+        } else if(coin === "bchtest") {
+            network = networks.bitcoincashtestnet;
+        } else if(coin === "ltc") {
+            network = networks.litecoin;
+        } else if(coin === "ltctest") {
             network = networks.litecointest;
-        } else if(coin == "doge") {
+        } else if(coin === "doge") {
             network = networks.dogecoin;
-        } else if(coin == "zcash") {
+        } else if(coin === "zcash") {
             network = networks.zcash;
+        } else if(coin === "dash") {
+            network = networks.dash;
         }
         var wallet = bitcoin.ECPair.fromWIF(key, network);
         const { address } = bitcoin.payments.p2pkh({ network: network, pubkey: wallet.publicKey });

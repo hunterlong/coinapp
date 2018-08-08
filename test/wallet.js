@@ -79,6 +79,36 @@ describe("CoinWallet() Functions", function() {
         expect(d.coin).to.equal("BTCTEST");
     });
 
+
+    it('make new Bitcoin Cash wallet', function() {
+        let wallet = CoinWallet.NewWallet("bch", "L1vv1jRRbenk1CN8tBkFhqTUbw78VBs8FaAEnZFVksS42z3YXnyt");
+        return expect(wallet).to.be.fulfilled
+            .then(function(d) {
+                expect(d.address).to.equal("1L99qwuiz75wShPAZT1kzvQQYy27w4hUw5");
+                expect(d.coin).to.equal("BCH");
+            });
+    });
+
+    it('make new Bitcoin Cash Testnet wallet', function() {
+        let wallet = CoinWallet.NewWallet("bchtest", "cVjvf8BCufNkiNVKdBtzAcqE44WG5bedw5d7nDNuMxUMNKR4srr1");
+        return expect(wallet).to.be.fulfilled
+            .then(function(d) {
+                expect(d.utxos()).to.be.fulfilled
+                    .then(function(utxos) {
+                        return expect(utxos.length).to.equal(0);
+                    });
+                expect(d.balance()).to.be.fulfilled
+                    .then(function(bal) {
+                        return expect(bal).to.equal(0);
+                    }).catch(function(e) {
+                    console.log(e);
+                    return expect(e).to.equal(0);
+                });
+                expect(d.address).to.equal("muvvhtaYDV1SpRPARHdtruG3nBv38MtS3C");
+                expect(d.coin).to.equal("BCHTEST");
+            });
+    });
+
     it('make new Litecoin wallet', function() {
         let wallet = CoinWallet.NewWallet("ltc", "T9GW6YBuQiqQ5sY6kokKCAb3MBsy94jisPapwoe7juxDYfgKvDye");
         return expect(wallet).to.be.fulfilled
@@ -114,6 +144,25 @@ describe("CoinWallet() Functions", function() {
                 });
                 expect(d.address).to.equal("muvvhtaYDV1SpRPARHdtruG3nBv38MtS3C");
                 expect(d.coin).to.equal("LTCTEST");
+            });
+    });
+
+
+    it('make new Doge wallet', function() {
+        let wallet = CoinWallet.NewWallet("doge", "QWNedECC794ZFVRYpDacxBLxnCKArRmw9Rv2KAmcCiKSWBrc9h3R");
+        return expect(wallet).to.be.fulfilled
+            .then(function(d) {
+                expect(d.address).to.equal("D9WjPFNQs8L2DQLRSaDmZzgPScPxUMxGem");
+                expect(d.coin).to.equal("DOGE");
+            });
+    });
+
+    it('make new Dash wallet', function() {
+        let wallet = CoinWallet.NewWallet("dash", "XEVfXKmeos8fPh9BdJyex9QnYas21pTdxu9D3yCdSWfbTkdL9p7J");
+        return expect(wallet).to.be.fulfilled
+            .then(function(d) {
+                expect(d.address).to.equal("XkZHUiM28GouvoJCcY94vFPKWeqGkdqn2j");
+                expect(d.coin).to.equal("DASH");
             });
     });
 
